@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/Emails")
+@RequestMapping("/emails")
 public class EmailController {
 
          private EmailService emailService;
@@ -29,16 +29,16 @@ public class EmailController {
     public ResponseEntity<List<EmailDTO>> getAllEmails() {
         return ResponseEntity.ok(emailService.getAllEmails());
     }
-    @PostMapping("/createEmail")
+    @PostMapping
     public ResponseEntity  <EmailDTO>  createEmail(@RequestBody @Valid EmailDTO emailDto) throws SystemException {
         return ResponseEntity.created(URI.create("/createEmail")).body(emailService.createEmail(emailDto));
     }
 
-    @PutMapping("/updateEmail")
+    @PutMapping
     public ResponseEntity <EmailDTO>  updateEmail(@RequestBody EmailDTO emailDto) throws SystemException {
              return ResponseEntity.ok(emailService.updateEmail(emailDto));
     }
-    @DeleteMapping("/deleteEmail/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity <EmailDTO>  deleteEmail( @PathVariable long id) throws SystemException {
              try {
                  emailService.deleteEmail(id);
@@ -48,19 +48,19 @@ public class EmailController {
              }
 
         }
-    @GetMapping("/getByName/{name}")
+    @GetMapping("/search/by-name/{name}")
     public ResponseEntity <List<EmailDTO>> getEmailByName( @PathVariable String name) throws SystemException {
         return ResponseEntity.ok(emailService.getEmailsByName(name));
 
     }
 
-    @GetMapping("/getByValue/{value}")
+    @GetMapping("/search/by-value/{value}")
     public ResponseEntity <EmailDTO> getEmailByValue( @PathVariable String value) throws SystemException {
         return ResponseEntity.ok(emailService.getEmailByValue(value));
 
     }
-    @GetMapping("/by-names")
-    //GET /employees/by-names?names=  ,  ,
+    @GetMapping("/search/by-names")
+    //GET /search/by-names?names=  ,  ,
     public ResponseEntity<List<EmailDTO>> getEmployeesByNames(@RequestParam List<String> names) throws SystemException {
         List<EmailDTO> emails = emailService.getEmailsByListOfName(names);
         return ResponseEntity.ok(emails);
