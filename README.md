@@ -23,33 +23,33 @@ This project is built with **Spring Boot** and provides an **API** for managing 
 
 ### Employee Endpoints
 
-- **GET** `/api/Employees`  
+- **GET** `/employees`  
   Retrieves a list of all employees.
 
-- **GET** `/api/Employees/{id}`  
+- **GET** `employees/{id}`  
   Retrieves an employee by ID.
 
-- **POST** `/api/Employees/createEmployee`  
+- **POST** `/employees`  
   Creates a new employee.
 
-- **PUT** `/api/Employees/updateEmployee`  
+- **PUT** `/employees`  
   Updates an existing employee by ID.
 
-- **DELETE** `/api/Employees/deleteEmployee/{id}`  
+- **DELETE** `/employees/{id}`  
   Deletes an employee by ID.
 
 ### Email Endpoints
 
-- **GET** `/api/Emails`  
+- **GET** `/emails`  
   Retrieves a list of all emails.
 
-- **POST** `/api/Emails/createEmail`  
+- **POST** `/emails`  
   Creates a new email for an employee.
 
-- **PUT** `/api/Emails/updateEmail`  
+- **PUT** `/emails`  
   Updates an email by ID.
 
-- **DELETE** `/api/Emails/deleteEmail/{id}`  
+- **DELETE** `/emails/{id}`  
   Deletes an email by ID.
 
 ## How to Run the Project
