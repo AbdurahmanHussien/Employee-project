@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: employee-project
+
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/orclpdb
+    username: hr
+    password: hr
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  main:
+    banner-mode: off
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
