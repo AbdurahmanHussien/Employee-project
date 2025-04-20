@@ -18,7 +18,7 @@ public interface EmployeeService {
        EmployeeDTO findEmployeeById (Long id) throws SystemException;
        List<EmployeeDTO> getEmployeesByListOfId ( List<Long> id) throws SystemException;
        List<EmployeeDTO> getEmployeesByListOfName ( List<String> name) throws SystemException;
-       Employee getEmployeeEntityById(Long id);
+       Employee getEmployeeEntityById(Long id) throws SystemException;
 
 
 

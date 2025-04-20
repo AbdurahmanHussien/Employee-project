@@ -89,9 +89,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployeeEntityById(Long id) {
+    public Employee getEmployeeEntityById(Long id) throws SystemException {
         return employeeDAO.findById(id)
-                .orElseThrow(() -> new RuntimeException("error.employee.notFound"));
+                .orElseThrow(() -> new SystemException("error.employee.notFound"));
     }
 
     private List<EmployeeDTO> mappingEmployees(List<Employee> employees) {

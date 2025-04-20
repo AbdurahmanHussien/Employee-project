@@ -1,6 +1,5 @@
 package com.springboot.employeeproject.mapper;
 
-import com.springboot.employeeproject.config.CentralConfig;
 import com.springboot.employeeproject.dto.EmployeeDTO;
 import com.springboot.employeeproject.model.Employee;
 import org.mapstruct.Mapper;
@@ -9,7 +8,7 @@ import org.mapstruct.Mapping;
 import java.util.List;
 
 
-@Mapper(config = CentralConfig.class)
+@Mapper(componentModel = "spring")
 public interface EmployeeMapper {
 
 

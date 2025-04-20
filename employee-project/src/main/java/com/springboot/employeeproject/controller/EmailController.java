@@ -31,7 +31,7 @@ public class EmailController {
     }
     @PostMapping
     public ResponseEntity  <EmailDTO>  createEmail(@RequestBody @Valid EmailDTO emailDto) throws SystemException {
-        return ResponseEntity.created(URI.create("/createEmail")).body(emailService.createEmail(emailDto));
+        return ResponseEntity.created(URI.create("/emails")).body(emailService.createEmail(emailDto));
     }
 
     @PutMapping

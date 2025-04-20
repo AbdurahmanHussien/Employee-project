@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-04-18T16:02:59+0200",
+    date = "2025-04-20T21:23:10+0200",
     comments = "version: 1.5.2.Final, compiler: javac, environment: Java 21.0.5 (Oracle Corporation)"
 )
 @Component
@@ -23,6 +23,11 @@ public class EmailMapperImpl implements EmailMapper {
 
         Email email = new Email();
 
+        email.setId( emailDTO.getId() );
+        email.setName( emailDTO.getName() );
+        email.setValue( emailDTO.getValue() );
+        email.setEmployee( emailDTO.getEmployee() );
+
         return email;
     }
 
@@ -33,6 +38,11 @@ public class EmailMapperImpl implements EmailMapper {
         }
 
         EmailDTO emailDTO = new EmailDTO();
+
+        emailDTO.setId( email.getId() );
+        emailDTO.setName( email.getName() );
+        emailDTO.setValue( email.getValue() );
+        emailDTO.setEmployee( email.getEmployee() );
 
         return emailDTO;
     }

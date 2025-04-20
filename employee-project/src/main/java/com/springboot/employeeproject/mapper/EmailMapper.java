@@ -1,13 +1,12 @@
 package com.springboot.employeeproject.mapper;
 
-import com.springboot.employeeproject.config.CentralConfig;
 import com.springboot.employeeproject.dto.EmailDTO;
 import com.springboot.employeeproject.model.Email;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+
 import java.util.List;
 
-@Mapper(config = CentralConfig.class)
+@Mapper(componentModel = "spring")
 public interface EmailMapper {
 
 
