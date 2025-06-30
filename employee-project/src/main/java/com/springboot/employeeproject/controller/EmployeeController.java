@@ -3,79 +3,78 @@ package com.springboot.employeeproject.controller;
 
 import com.springboot.employeeproject.dto.BundleMessageDTO;
 import com.springboot.employeeproject.dto.EmployeeDTO;
-import com.springboot.employeeproject.service.bundleService.BundleTranslatorService;
 import com.springboot.employeeproject.service.employee.EmployeeService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.SystemException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
-import java.util.Locale;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/api/employees")
 public class EmployeeController {
 
-    private final BundleTranslatorService bundleTranslatorService;
     private EmployeeService employeeService;
     private final MessageSource messageSource;
 
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService, BundleTranslatorService bundleTranslatorService , MessageSource messageSource) {
+    public EmployeeController(EmployeeService employeeService , MessageSource messageSource) {
         this.employeeService = employeeService;
-        this.bundleTranslatorService = bundleTranslatorService;
         this.messageSource = messageSource;
     }
 
-    @GetMapping
+    @GetMapping("employee")
+    @Operation(summary = "Get all employees")
     public ResponseEntity  <List<EmployeeDTO>> getAllEmployees() {
         return ResponseEntity.ok(employeeService.getAllEmployees());
     }
     @GetMapping("/with-emails")
+    @Operation(summary = "Get all employees with emails")
     public ResponseEntity  <List<EmployeeDTO>> getAllEmployeesWithEmail() {
         return ResponseEntity.ok(employeeService.getAllEmployeesWithEmails());
     }
 
-    @PostMapping
+    @PostMapping("/employee")
+    @Operation(summary = "Create employee")
     public ResponseEntity  <EmployeeDTO>  createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) throws SystemException {
         return ResponseEntity.ok(employeeService.createEmployee(employeeDTO));
     }
 
-    @PutMapping
+    @PutMapping("/employee")
+    @Operation(summary = "Update employee")
     public ResponseEntity  <EmployeeDTO>  updateEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) throws SystemException {
         return ResponseEntity.ok(employeeService.updateEmployee(employeeDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity  <BundleMessageDTO>  deleteEmployee(@PathVariable Long id )  {
-        try {
-            employeeService.deleteEmployee(id);
-            String english = messageSource.getMessage("employee.deleted", new Object[]{id}, Locale.ENGLISH);
-            String arabic = messageSource.getMessage("employee.deleted", new Object[]{id}, new Locale("ar"));
-            BundleMessageDTO messageDTO = new BundleMessageDTO(english, arabic);
-            return ResponseEntity.ok(messageDTO);
-        } catch (RuntimeException | SystemException e) {
-            return ResponseEntity.notFound().build();
-        }
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Delete employee")
+    public ResponseEntity  <BundleMessageDTO>  deleteEmployee(@PathVariable Long id ) throws SystemException {
+
+        return employeeService.deleteEmployee(id);
     }
     @GetMapping("/{id}")
+    @Operation(summary = "Get employee by id")
     public ResponseEntity <EmployeeDTO> getEmployeeById( @PathVariable long id) throws SystemException {
         return ResponseEntity.ok(employeeService.findEmployeeById(id));
     }
 
     @GetMapping("/search/by-ids")
+    @Operation(summary = "Get employees by ids")
     //GET /employees/search/by-ids?ids=1,2,3
-    public ResponseEntity<List<EmployeeDTO>> getEmployeesByIds(@RequestParam List<Long> ids) throws SystemException {
+    public ResponseEntity<List<EmployeeDTO>> getEmployeesByIds(@RequestParam(name = "ids") List<Long> ids) throws SystemException {
         List<EmployeeDTO> employees = employeeService.getEmployeesByListOfId(ids);
         return ResponseEntity.ok(employees);
     }
 
     @GetMapping("/search/by-names")
+    @Operation(summary = "Get employees by names")
     //GET /employees/search/by-names?names=  ,  ,
     public ResponseEntity<List<EmployeeDTO>> getEmployeesByNames(@RequestParam List<String> names) throws SystemException {
         List<EmployeeDTO> employees = employeeService.getEmployeesByListOfName(names);

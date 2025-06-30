@@ -1,22 +1,21 @@
 package com.springboot.employeeproject.dto;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class ExceptionDTO {
 
+    private List<BundleMessageDTO> messages;
 
-        List<BundleMessageDTO> message;
+    public ExceptionDTO(List<BundleMessageDTO> messages) {
+        this.messages = messages;
+    }
 
+    public List<BundleMessageDTO> getMessages() {
+        return messages;
+    }
 
-
+    public void setMessages(List<BundleMessageDTO> messages) {
+        this.messages = messages;
+    }
 }

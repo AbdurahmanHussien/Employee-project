@@ -1,15 +1,20 @@
 package com.springboot.employeeproject.service.employee;
 
 import com.springboot.employeeproject.dao.EmployeeDAO;
+import com.springboot.employeeproject.dto.BundleMessageDTO;
 import com.springboot.employeeproject.dto.EmailDTO;
 import com.springboot.employeeproject.dto.EmployeeDTO;
 import com.springboot.employeeproject.mapper.EmployeeMapper;
 import com.springboot.employeeproject.model.Employee;
 import jakarta.transaction.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,11 +24,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeDAO employeeDAO;
     private final EmployeeMapper employeeMapper;
+    private final MessageSource messageSource;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeDAO employeeDAO , EmployeeMapper employeeMapper) {
+    public EmployeeServiceImpl(EmployeeDAO employeeDAO , EmployeeMapper employeeMapper , MessageSource messageSource) {
         this.employeeDAO = employeeDAO;
         this.employeeMapper = employeeMapper;
+        this.messageSource = messageSource;
     }
 
     @Override
@@ -48,9 +55,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployee(Long id) throws SystemException {
+    public ResponseEntity<BundleMessageDTO> deleteEmployee(Long id) throws SystemException {
         Employee employee = getEmployeeEntityById(id);
         employeeDAO.deleteById(id);
+       String messageEn = messageSource.getMessage("employee.deleted",null , Locale.ENGLISH);
+        String messageAr = messageSource.getMessage("employee.deleted",null , new Locale("ar"));
+        BundleMessageDTO response = new BundleMessageDTO(messageEn,messageAr);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
     }
 
     public List<EmployeeDTO> getAllEmployeesWithEmails() {

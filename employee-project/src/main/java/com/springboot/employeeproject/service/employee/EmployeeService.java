@@ -1,8 +1,10 @@
 package com.springboot.employeeproject.service.employee;
 
+import com.springboot.employeeproject.dto.BundleMessageDTO;
 import com.springboot.employeeproject.dto.EmployeeDTO;
 import com.springboot.employeeproject.model.Employee;
 import jakarta.transaction.SystemException;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -14,7 +16,7 @@ public interface EmployeeService {
        List<EmployeeDTO> getAllEmployeesWithEmails();
        EmployeeDTO createEmployee(EmployeeDTO employeeDTO) throws SystemException;
        EmployeeDTO updateEmployee (EmployeeDTO employeeDTO) throws SystemException;
-       void deleteEmployee (Long id) throws SystemException;
+       ResponseEntity<BundleMessageDTO> deleteEmployee (Long id) throws SystemException;
        EmployeeDTO findEmployeeById (Long id) throws SystemException;
        List<EmployeeDTO> getEmployeesByListOfId ( List<Long> id) throws SystemException;
        List<EmployeeDTO> getEmployeesByListOfName ( List<String> name) throws SystemException;

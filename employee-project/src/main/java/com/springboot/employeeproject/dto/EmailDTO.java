@@ -10,9 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 
-@Getter
-@Setter
-@AllArgsConstructor
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 public class EmailDTO {
@@ -42,11 +40,54 @@ public class EmailDTO {
     }
     public EmailDTO() {}
 
-    public EmailDTO(Long id, String name, String value, long employeeId) {
-       this.id = id;
-       this.name = name;
-       this.value = value;
-       this.employeeId = employeeId;
 
+    public EmailDTO(Long id, String name, String value, Long employeeId, Employee employee) {
+        this.id = id;
+        this.name = name;
+        this.value = value;
+        this.employeeId = employeeId;
+        this.employee = employee;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public @NotEmpty(message = "Enter the type of email") String getName() {
+        return name;
+    }
+
+    public void setName(@NotEmpty(message = "Enter the type of email") String name) {
+        this.name = name;
+    }
+
+    public @Email(message = "error.type.invalid") String getValue() {
+        return value;
+    }
+
+    public void setValue(@Email(message = "error.type.invalid") String value) {
+        this.value = value;
+    }
+
+    public @NotNull(message = "employee ID is required") Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(@NotNull(message = "employee ID is required") Long employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }
+
+
